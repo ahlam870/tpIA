@@ -1,4 +1,6 @@
-assertz(task(TaskID, Description, Assignee, false)),
+
+create_task(TaskID, Description, Assignee) :-
+    assertz(task(TaskID, Description, Assignee, false)),
     format("Task created: ~w (Description: ~w, Assigned to: ~w, Status: false).\n", [TaskID, Description, Assignee]).
 
 
@@ -25,7 +27,7 @@ display_tasks :-
            )).
 
 
-display_completed_tasks :-
+display_completed_tasks_to :-
     forall(
         task(TaskID, Description, Assignee, true),
         format("Completed tasks:\nTask ~w:\n\t- Description: ~w\n\t- Completion status: ~w\n", [TaskID, Description, Assignee])
