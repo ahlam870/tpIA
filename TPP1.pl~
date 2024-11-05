@@ -3,7 +3,8 @@ create_task(TaskID, Description, Assignee) :-assertz(task(TaskID, Description, A
 assign_task(TaskID, Assignee) :- task(TaskID, Description, _, Status),assertz(task(TaskID, Description, Assignee, Status)).
 
 mark_completed(TaskID) :-task(TaskID, Description, Assignee, _),retract(task(TaskID, Description, Assignee, _)),assertz(task(TaskID, Description, Assignee, true)).
-display_tasks_assigned_to(Assignee) :-forall(task(TaskID, Description, Assignee, Status).
-
+display_tasks :-forall(task(taskID, description,assignee, status)).
+display_assigned(Assignee) :- forall(task(taskID, description, Assignee, status)).
+display_tasks :- forall(task(taskID, description, assignee, true)).
 
 
