@@ -2,6 +2,7 @@
 % ?- create_task(1, 'Implement login functionality', 'Alice').
 % ?- create_task(2, 'Design homepage layout', 'Bob').
 % ?- assign_task(1, 'John').
+% ?- assign_task(2, 'Alice').
 % ?- mark_completed(2).
 % ?- display_tasks.
 % ?- display_assigned('Alice').
