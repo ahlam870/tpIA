@@ -1,10 +1,39 @@
-task(taskID, description, assignee, completionStatus).
-create_task(TaskID, Description, Assignee) :-assertz(task(TaskID, Description, Assignee, false)).
-assign_task(TaskID, Assignee) :- task(TaskID, Description, _, Status),assertz(task(TaskID, Description, Assignee, Status)).
+create_task(TaskID, Description, Assignee) :-
+    assertz(task(TaskID, Description, Assignee, false)),
+    format("Task created: ~w.", [TaskID]).
 
-mark_completed(TaskID) :-task(TaskID, Description, Assignee, _),retract(task(TaskID, Description, Assignee, _)),assertz(task(TaskID, Description, Assignee, true)).
-display_tasks :-forall(task(taskID, description,assignee, status)).
-display_assigned(Assignee) :- forall(task(taskID, description, Assignee, status)).
-display_tasks :- forall(task(taskID, description, assignee, true)).
+assign_task(TaskID, Assignee) :-
+    task(TaskID, Description, _, Status),
+    retract(task(TaskID, Description, _, Status)),
+    assertz(task(TaskID, Description, Assignee, Status)),
+    format("Task ~w assigned to user: ~w.", [TaskID, Assignee]).
 
+mark_completed(TaskID) :-
+    task(TaskID, Description, Assignee, _),
+    retract(task(TaskID, Description, Assignee, _)),
+    assertz(task(TaskID, Description, Assignee, true)),
+ format("Task ~w marked as completed.", [TaskID]).
+
+display_tasks :-
+    forall(task(TaskID, Description, Assignee, Status),
+           ( write('ID de la tâche : '), write(TaskID), nl,
+               write('Description : '), write(Description), nl,
+               write('Assigné à : '), write(Assignee), nl,
+               write('Terminée : '), write(Status), nl, nl
+           )).
+
+display_assigned(Assignee) :-
+    forall(task(TaskID, Description, Assignee, Status),
+           ( write('ID de la tâche : '), write(TaskID), nl,
+               write('Description : '), write(Description), nl,
+               write('Terminée : '), write(Status), nl, nl
+           )).
+
+display_completed :-
+    forall(task(TaskID, Description, Assignee, true),
+           ( write('ID de la tâche : '), write(TaskID), nl,
+               write('Description : '), write(Description), nl,
+               write('Assigné à : '), write(Assignee), nl,
+               write('Terminée : true'), nl, nl
+           )).
 
