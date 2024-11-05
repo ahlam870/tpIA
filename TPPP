@@ -1,1 +1,7 @@
-LPPMM%
+:- dynamic(task/4).
+task(taskID, description, assignee, completionStatus).
+create_task(TaskID, Description, Assignee) :-assertz(task(TaskID, Description, Assignee, false)).
+assign_task(TaskID, Assignee) :- task(TaskID, Description, _, Status),assertz(task(TaskID, Description, Assignee, Status)).
+
+mark_completed(TaskID) :-task(TaskID, Description, Assignee, _),retract(task(TaskID, Description, Assignee, _)),assertz(task(TaskID, Description, Assignee, true)).
+
