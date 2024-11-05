@@ -12,28 +12,27 @@ mark_completed(TaskID) :-
     task(TaskID, Description, Assignee, _),
     retract(task(TaskID, Description, Assignee, _)),
     assertz(task(TaskID, Description, Assignee, true)),
- format("Task ~w marked as completed.", [TaskID]).
+    format("Task ~w marked as completed.", [TaskID]).
 
 display_tasks :-
     forall(task(TaskID, Description, Assignee, Status),
            ( write('ID de la tâche : '), write(TaskID), nl,
-               write('Description : '), write(Description), nl,
-               write('Assigné à : '), write(Assignee), nl,
-               write('Terminée : '), write(Status), nl, nl
+             write('Description : '), write(Description), nl,
+             write('Assigné à : '), write(Assignee), nl,
+             write('Terminée : '), write(Status), nl, nl
            )).
 
 display_assigned(Assignee) :-
     forall(task(TaskID, Description, Assignee, Status),
            ( write('ID de la tâche : '), write(TaskID), nl,
-               write('Description : '), write(Description), nl,
-               write('Terminée : '), write(Status), nl, nl
+             write('Description : '), write(Description), nl,
+             write('Terminée : '), write(Status), nl, nl
            )).
 
 display_completed :-
     forall(task(TaskID, Description, Assignee, true),
            ( write('ID de la tâche : '), write(TaskID), nl,
-               write('Description : '), write(Description), nl,
-               write('Assigné à : '), write(Assignee), nl,
-               write('Terminée : true'), nl, nl
+             write('Description : '), write(Description), nl,
+             write('Assigné à : '), write(Assignee), nl,
+             write('Terminée : true'), nl, nl
            )).
-
