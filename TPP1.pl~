@@ -1,38 +1,39 @@
-create_task(TaskID, Description, Assignee) :-
-    assertz(task(TaskID, Description, Assignee, false)),
-    format("Task created: ~w.", [TaskID]).
+assertz(task(TaskID, Description, Assignee, false)),
+    format("Task created: ~w (Description: ~w, Assigned to: ~w, Status: false).\n", [TaskID, Description, Assignee]).
 
+% Assigner une tâche à un nouvel Assignee.
 assign_task(TaskID, Assignee) :-
     task(TaskID, Description, _, Status),
     retract(task(TaskID, Description, _, Status)),
     assertz(task(TaskID, Description, Assignee, Status)),
-    format("Task ~w assigned to user: ~w.", [TaskID, Assignee]).
+    format("Task ~w assigned to user: ~w.\n", [TaskID, Assignee]).
 
+% Marquer une tâche comme terminée.
 mark_completed(TaskID) :-
     task(TaskID, Description, Assignee, _),
     retract(task(TaskID, Description, Assignee, _)),
     assertz(task(TaskID, Description, Assignee, true)),
-    format("Task ~w marked as completed.", [TaskID]).
+    format("Task ~w marked as completed.\n", [TaskID]).
 
+% Afficher toutes les tâches.
 display_tasks :-
     forall(task(TaskID, Description, Assignee, Status),
            ( write('ID de la tâche : '), write(TaskID), nl,
-             write('Description : '), write(Description), nl,
-             write('Assigné à : '), write(Assignee), nl,
-             write('Terminée : '), write(Status), nl, nl
+               write('Description : '), write(Description), nl,
+               write('Assigné à : '), write(Assignee), nl,
+               write('Terminée : '), write(Status), nl, nl
            )).
 
-display_assigned(Assignee) :-
-    forall(task(TaskID, Description, Assignee, Status),
-           ( write('ID de la tâche : '), write(TaskID), nl,
-             write('Description : '), write(Description), nl,
-             write('Terminée : '), write(Status), nl, nl
-           )).
+% Afficher uniquement les tâches terminées.
+display_completed_tasks :-
+    forall(
+        task(TaskID, Description, Assignee, true),
+        format("Completed tasks:\nTask ~w:\n\t- Description: ~w\n\t- Completion status: ~w\n", [TaskID, Description, Assignee])
+    ).
 
-display_completed :-
-    forall(task(TaskID, Description, Assignee, true),
-           ( write('ID de la tâche : '), write(TaskID), nl,
-             write('Description : '), write(Description), nl,
-             write('Assigné à : '), write(Assignee), nl,
-             write('Terminée : true'), nl, nl
-           )).
+% Afficher uniquement les tâches non terminées.
+display_uncompleted_tasks :-
+    forall(
+        task(TaskID, Description, Assignee, false),
+        format("Uncompleted tasks:\nTask ~w:\n\t- Description: ~w\n\t- Completion status: ~w\n", [TaskID, Description, Assignee])
+    ).
