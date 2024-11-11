@@ -1,0 +1,32 @@
+that is true if x is an element of the list L.
+element(X,[X|_]).
+element(X,[_|T]):- element(X,T).
+
+
+first(E,[E|_]).
+
+last(X,[X]).
+last(X,[_|T]):- last(X,T).
+
+
+penultimate(X,[X, _]).
+penultimate(X,[_|T]) :- penultimate(X,T).
+
+del_k(X,[X|T],1,T).
+del_k(X,[H|T], K, [H|R]):-
+    K > 1,
+    K1 is K - 1,
+    del_k(X,T,K1,R).
+
+
+listlength([],0).
+listlength([_|T],N):- length(T,N1),N is N1 + 1.
+
+
+even(L):- length(L,N),0 is N mod 2.
+
+
+concat([],L,L).
+concat([H|T], L2, [H|L3]):- concat(T, L2, L3).
+
+palindrome(L):- reverse(L,L).
