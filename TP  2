@@ -35,7 +35,7 @@ list_length([_|T],N):- list_length(T,N1),N is N1 + 1.
 
 
 %Define the predicate `even(L)` that is true if L has an even number of elements.
-even(L):- length(L,N),0 is N mod 2.
+even(L):- list_length(L,N),0 is N mod 2.
 
 
 % Define the predicate `concat(L1, L2, L3)` where L3 is the result of concatenating L1 and L2 (without using append).
