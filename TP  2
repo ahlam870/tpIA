@@ -1,16 +1,26 @@
-that is true if x is an element of the list L.
+%Write A Prolog Predicate that is true if x is an element of the list L.
 element(X,[X|_]).
 element(X,[_|T]):- element(X,T).
 
-
+%`first(E, L)` is true if E is the first element of L.
 first(E,[E|_]).
+
+
+%Write a Prolog predicate `last` that finds the last element of a list L.lastelement([X],X).
 
 last(X,[X]).
 last(X,[_|T]):- last(X,T).
 
 
+
+
+
+%Write a Prolog predicate `penultimate` that finds the penultimate (second-to-last)element of a list L.
 penultimate(X,[X, _]).
 penultimate(X,[_|T]) :- penultimate(X,T).
+
+
+%Write a Prolog predicate that removes the Kth element from a list L1 and writes theresult into a list L2.
 
 del_k(X,[X|T],1,T).
 del_k(X,[H|T], K, [H|R]):-
@@ -19,14 +29,19 @@ del_k(X,[H|T], K, [H|R]):-
     del_k(X,T,K1,R).
 
 
+%Define the predicate `length(L, N)`, which, given the list L, calculates its length N.
 listlength([],0).
 listlength([_|T],N):- length(T,N1),N is N1 + 1.
 
 
+%Define the predicate `even(L)` that is true if L has an even number of elements.
 even(L):- length(L,N),0 is N mod 2.
 
 
+% Define the predicate `concat(L1, L2, L3)` where L3 is the result of concatenating L1 and L2 (without using append).
 concat([],L,L).
 concat([H|T], L2, [H|L3]):- concat(T, L2, L3).
 
+
+%Define the predicate `palindrome(L)` that is true if the list L is its own reversed image(example: [x,a,m,a,x])
 palindrome(L):- reverse(L,L).
