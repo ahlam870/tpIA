@@ -30,8 +30,8 @@ del_k(X,[H|T], K, [H|R]):-
 
 
 %Define the predicate `length(L, N)`, which, given the list L, calculates its length N.
-listlength([],0).
-listlength([_|T],N):- length(T,N1),N is N1 + 1.
+length([],0).
+length([_|T],N):- length(T,N1),N is N1 + 1.
 
 
 %Define the predicate `even(L)` that is true if L has an even number of elements.
